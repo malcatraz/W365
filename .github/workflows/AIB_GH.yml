@@ -24,7 +24,7 @@ jobs:
       with:        
         resource-group-name: 'myResourceGroup'
         managed-identity: 'W365MI'
-        location: 'eastus2'
+        location: 'eastus'
         source-os-type: 'windows'        
         source-image: MicrosoftWindowsServer:WindowsServer:2019-Datacenter:latest        
         customizer-script: |
@@ -35,5 +35,5 @@ jobs:
       with:
         azcliversion: 2.0.72
         inlineScript: |
-          az vm create --resource-group myResourceGroup  --name "app-vm-${{ GITHUB.RUN_NUMBER }}"  --admin-username malcatrazadmin --admin-password "${{ secrets.VM_PWD }}" --location  eastus2 \
+          az vm create --resource-group myResourceGroup  --name "app-vm-${{ GITHUB.RUN_NUMBER }}"  --admin-username malcatrazadmin --admin-password "${{ secrets.VM_PWD }}" --location  eastus \
           --image "${{ steps.BUILD-CUSTOM-IMAGE.outputs.custom-image-uri }}"  
