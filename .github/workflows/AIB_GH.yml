@@ -22,7 +22,7 @@ jobs:
     - name: BUILD-CUSTOM-VM-IMAGE      
       uses: azure/build-vm-image@v0
       with:        
-        resource-group-name: 'myResourceGroup'
+        resource-group-name: 'W365-RG'
         managed-identity: 'W365MI'
         location: 'eastus'
         source-os-type: 'windows'        
