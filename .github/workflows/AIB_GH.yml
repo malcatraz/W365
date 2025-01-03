@@ -1,0 +1,39 @@
+name: create_custom_windows_image
+
+on: push
+
+jobs:
+  BUILD-CUSTOM-IMAGE:
+    runs-on: ubuntu-latest    
+    steps:
+    - name: CHECKOUT
+      uses: actions/checkout@v2
+  
+
+    - name: AZURE LOGIN 
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+
+    - name: BUILD WEBAPP
+      run: sudo ${{ GITHUB.WORKSPACE }}/webApp/buildscript.sh # Runs necessary build scripts and copies built artifacts to  ${{ GITHUB.WORKSPACE }}/workflow-artifacts
+      
+
+    - name: BUILD-CUSTOM-VM-IMAGE      
+      uses: azure/build-vm-image@v0
+      with:        
+        resource-group-name: 'W365-RG'
+        managed-identity: 'W365MI'
+        location: 'eastus'
+        source-os-type: 'windows'        
+        source-image: MicrosoftWindowsDesktop:Win11-24H2-ent:latest        
+        customizer-script: |
+          & 'c:\workflow-artifacts\webApp\Install-Applications.ps1'
+
+    - name: CREATE VM
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.0.72
+        inlineScript: |
+          az vm create --resource-group W365-RG  --name "app-vm-${{ GITHUB.RUN_NUMBER }}"  --admin-username malcatrazadmin --admin-password "${{ secrets.VM_PWD }}" --location  eastus \
+          --image "${{ steps.<workflow_step_id>.outputs.custom-image-uri }}"              
