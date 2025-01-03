@@ -27,8 +27,8 @@ jobs:
         source-image: MicrosoftWindowsDesktop:Win11-24H2-ent:latest        
         customizer-script: |
           & 'c:\workflow-artifacts\webApp\Install-Applications.ps1'
-        outputs:
-          custom-image-uri: ${{ steps.BUILD-CUSTOM-VM-IMAGE.outputs.custom-image-uri }}
+      outputs:
+        custom-image-uri: ${{ steps.BUILD-CUSTOM-VM-IMAGE.outputs.custom-image-uri }}
 
     - name: CREATE VM
       uses: azure/CLI@v2.1.0
