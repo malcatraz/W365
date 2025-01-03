@@ -36,4 +36,4 @@ jobs:
         azcliversion: 2.0.72
         inlineScript: |
           az vm create --resource-group W365-RG  --name "app-vm-${{ GITHUB.RUN_NUMBER }}"  --admin-username malcatrazadmin --admin-password "${{ secrets.VM_PWD }}" --location  eastus \
-          --image "${{ steps.<workflow_step_id>.outputs.custom-image-uri }}"              
+          --image "${{ steps.imagebuilder.outputs.custom-image-uri }}"              
