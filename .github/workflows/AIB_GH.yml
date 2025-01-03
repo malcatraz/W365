@@ -23,7 +23,7 @@ jobs:
       uses: azure/build-vm-image@v0
       with:        
         resource-group-name: 'myResourceGroup'
-        managed-identity: 'myImageBuilderIdentity'
+        managed-identity: 'W365MI'
         location: 'eastus2'
         source-os-type: 'windows'        
         source-image: MicrosoftWindowsServer:WindowsServer:2019-Datacenter:latest        
